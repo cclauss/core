@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jul 30 13:44:35 2020 by generateDS.py version 2.35.24.
+# Generated Mon Aug 24 15:23:10 2020 by generateDS.py version 2.35.26.
 # Python 3.6.9 (default, Jul 17 2020, 12:50:27)  [GCC 8.4.0]
 #
 # Command line options:
@@ -14950,7 +14950,9 @@ __all__ = [
 ]
 def parse(inFileName, silence=False, print_warnings=True):
     global CapturedNsmap_
-    gds_collector = GdsCollector_()
+    if not filename:
+        filename=inFilename
+    gds_collector = GdsCollector_(filename=filenmae)
     parser = None
     doc = parsexml_(inFileName, parser)
     rootNode = doc.getroot()
@@ -14979,7 +14981,7 @@ def parse(inFileName, silence=False, print_warnings=True):
         sys.stderr.write(separator)
     return rootObj
 
-def parseString(inString, silence=False, print_warnings=True):
+def parseString(inString, filename=None, silence=False, print_warnings=True):
     '''Parse a string, create the object tree, and export it.
 
     Arguments:
@@ -14990,7 +14992,7 @@ def parseString(inString, silence=False, print_warnings=True):
     '''
     parser = None
     rootNode= parsexmlstring_(inString, parser)
-    gds_collector = GdsCollector_()
+    gds_collector = GdsCollector_(filename=filename)
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
         rootTag = 'PcGts'
