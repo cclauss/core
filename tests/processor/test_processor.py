@@ -89,5 +89,7 @@ class TestProcessor(TestCase):
                 resolver=Resolver(),
             )
 
+    def test_resolve_files
+
 if __name__ == "__main__":
     main()
