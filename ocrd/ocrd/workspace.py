@@ -70,7 +70,7 @@ class Workspace():
             self.directory,
             self.baseurl,
             self.mets.file_groups,
-            [str(f) for f in self.mets.find_files()],
+            [str(f) for f in self.mets.find_all_files()],
         )
 
     def reload_mets(self):
@@ -263,8 +263,7 @@ class Workspace():
         Return
             :class:`OcrdExif`
         """
-        files = self.mets.find_files(url=image_url)
-        f = files[0] if files else OcrdFile(None, url=image_url)
+        f = next(self.mets.find_files(url=image_url), OcrdFile(None, url=image_url))
         image_filename = self.download_file(f).local_filename
         with Image.open(image_filename) as pil_img:
             ocrd_exif = OcrdExif(pil_img)
@@ -285,8 +284,7 @@ class Workspace():
             Image or region in image as PIL.Image
 
         """
-        files = self.mets.find_files(url=image_url)
-        f = files[0] if files else OcrdFile(None, url=image_url)
+        f = next(self.mets.find_files(url=image_url), OcrdFile(None, url=image_url))
         image_filename = self.download_file(f).local_filename
 
         with pushd_popd(self.directory):
